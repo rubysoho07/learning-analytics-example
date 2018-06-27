@@ -21,6 +21,9 @@ PyCon Korea 2018 컨퍼런스 중 '파이썬으로 학생 들여다보기' 세�
 
 ## 필요한 패키지 설치
 
+1. 데이터 저장을 위해 MongoDB를 설치해 주세요. 사용하는 플랫폼에 맞추어 설치하면 됩니다.
+(참고자료: https://docs.mongodb.com/manual/administration/install-community/)
+2. pip으로 필요한 패키지를 설치합니다.
 ```bash
 $ pip install -r requirements.txt
 ```
