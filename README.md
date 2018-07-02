@@ -9,7 +9,7 @@ PyCon Korea 2018 컨퍼런스 중 '파이썬으로 학생 들여다보기' 세�
 * [ ] xAPI 기반의 학습 데이터 생성 샘플 코드 (Gist로 제공 예정)
 * [ ] Caliper 기반의 학습 데이터 생성 샘플 코드 (Gist로 제공 예정)
 * [x] Flask + PyMongo + Caliper-Python 설치
-* [ ] 로그인/로그아웃 기능 + Caliper 기반의 데이터 생성
+* [x] 로그인/로그아웃 기능 + Caliper 기반의 데이터 생성
 * [ ] 글 읽기 기능 + Caliper 기반의 데이터 생성
 * [ ] 태그 기능 + Caliper 기반의 데이터 생성
 * [ ] 평가 시작 기능 + Caliper 기반의 데이터 생성

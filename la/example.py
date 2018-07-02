@@ -4,6 +4,8 @@ from pymongo import MongoClient
 from bson import ObjectId
 from flask import Flask, render_template, request, abort, session, redirect, url_for
 
+from la.caliper_data import save_session_event
+
 app = Flask(__name__)
 app.secret_key = 'U9dvcDH1pvn6zSOgZZBrweHy9lvB6Shd'
 
@@ -27,12 +29,20 @@ def index():
 @app.route('/login')
 def login():
     session['username'] = 'test_user'
+
+    # Create Caliper SessionEvent (LoggedIn)
+    save_session_event(True, session['username'])
+
     return redirect(url_for('index'))
 
 
 @app.route('/logout')
 def logout():
+    # Create Caliper SessionEvent (LoggedOut)
+    save_session_event(False, session['username'])
+
     session.pop('username')
+
     return redirect(url_for('index'))
 
 
