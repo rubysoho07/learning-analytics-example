@@ -2,8 +2,14 @@
 
 {% block content %}
 <div class="jumbotron">
-<h3>Hello, Learning Analytics!</h3>
+<h2>Hello, Learning Analytics!</h2>
 
-    로그인을 먼저 해 주세요.
+    {% if not logged_in %}
+    <p>로그인을 먼저 해 주세요.</p>
+
+    <a class="btn btn-primary" href="{{ url_for('login') }}" role="button">로그인</a>
+    {% else %}
+    <p>{{ username }}님이 로그인 하였습니다.</p>
+    {% endif %}
 </div>
 {% endblock %}

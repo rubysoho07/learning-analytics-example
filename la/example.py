@@ -2,9 +2,10 @@ import json
 
 from pymongo import MongoClient
 from bson import ObjectId
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, session, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = 'U9dvcDH1pvn6zSOgZZBrweHy9lvB6Shd'
 
 
 # Database configuration
@@ -13,7 +14,26 @@ lrs = MongoClient('localhost')['LRS']['CaliperEvents']
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'username' in session.keys():
+        logged_in = True
+        username = session['username']
+    else:
+        logged_in = False
+        username = None
+
+    return render_template('index.html', logged_in=logged_in, username=username)
+
+
+@app.route('/login')
+def login():
+    session['username'] = 'test_user'
+    return redirect(url_for('index'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    return redirect(url_for('index'))
 
 
 @app.route('/endpoint', methods=['POST'])
