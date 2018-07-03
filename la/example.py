@@ -84,11 +84,13 @@ def endpoint():
     """ Endpoint to save learning record. """
     if request.method == 'POST':
         data = json.loads(request.data)
-        result = lrs.insert(data)
 
-        if type(result) is not ObjectId:
-            abort(500)
+        for event in data['data']:
+            result = lrs.insert(event)
 
-        return str(result)
+            if type(result) is not ObjectId:
+                abort(500)
+
+        return "Inserting events completed!"
     else:
         abort(400)
