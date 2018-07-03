@@ -19,7 +19,7 @@ sensor = caliper.build_sensor_from_config(
 
 def save_session_event(is_login, user):
     event = events.SessionEvent(
-        actor=entities.Person(id='http://example.org/person' + user, name=user),
+        actor=entities.Person(id='http://example.org/person/' + user, name=user),
         action=CALIPER_ACTIONS['LOGGED_IN'] if is_login is True else CALIPER_ACTIONS['LOGGED_OUT'],
         object=entities.SoftwareApplication(id='http://example.org/app/testservice', name='Learning Analytics Example'),
         eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
@@ -32,7 +32,7 @@ def save_navigation_event(user):
 
     # Create and send AnnotationEvent
     event = events.NavigationEvent(
-        actor=entities.Person(id='http://example.org/person' + user, name=user),
+        actor=entities.Person(id='http://example.org/person/' + user, name=user),
         action=CALIPER_ACTIONS['NAVIGATED_TO'],
         object=entities.WebPage(id='http://example.org/textbook/1', name='Textbook'),
         eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
@@ -47,14 +47,14 @@ def save_annotation_event(user, tags):
     # Tag
     generated_tag = entities.TagAnnotation(
         id="http://example.org/textbook/1/tag/1",
-        annotator=entities.Person(id='http://example.org/person' + user, name=user),
+        annotator=entities.Person(id='http://example.org/person/' + user, name=user),
         annotated=entities.WebPage(id='http://example.org/textbook/1', name='Textbook'),
         tags=tags
     )
 
     # Create and send AnnotationEvent
     event = events.AnnotationEvent(
-        actor=entities.Person(id='http://example.org/person' + user, name=user),
+        actor=entities.Person(id='http://example.org/person/' + user, name=user),
         action=CALIPER_ACTIONS['TAGGED'],
         object=entities.WebPage(id='http://example.org/textbook/1', name='Textbook'),
         generated=generated_tag,
