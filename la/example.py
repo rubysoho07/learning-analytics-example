@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from flask import Flask, render_template, request, abort, session, redirect, url_for
 
-from la.caliper_data import *
+from la.caliper_event import *
 
 app = Flask(__name__)
 app.secret_key = 'U9dvcDH1pvn6zSOgZZBrweHy9lvB6Shd'
