@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from flask import Flask, render_template, request, abort, session, redirect, url_for
 
-from la.caliper_data import save_session_event, save_annotation_event, save_navigation_event
+from la.caliper_data import *
 
 app = Flask(__name__)
 app.secret_key = 'U9dvcDH1pvn6zSOgZZBrweHy9lvB6Shd'
@@ -39,7 +39,6 @@ def login():
 
     # Create Caliper SessionEvent (LoggedIn)
     save_session_event(True, session['username'])
-
     return redirect(url_for('index'))
 
 
@@ -83,6 +82,11 @@ def tag_page():
 def assessment_page():
     """ Starting assessment. """
 
+    if _check_login() is False:
+        return redirect(url_for('index'))
+
+    save_assessment_event_started(session['username'])
+
     return render_template('assessment.html')
 
 
@@ -90,12 +94,17 @@ def assessment_page():
 def assessment_submit():
     """ Submit student's answer for the assessment. """
 
+    if _check_login() is False:
+        return redirect(url_for('index'))
+
     answer = int(request.form['test-question'])
 
     if answer == 1:
-        score_given = 10.0
+        score = 10.0
     else:
-        score_given = 0.0
+        score = 0.0
+
+    save_assessment_event_submitted_grade_event(session['username'], score)
 
     return render_template('assessment.html', answer=answer)
 
