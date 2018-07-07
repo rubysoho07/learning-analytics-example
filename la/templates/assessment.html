@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px"></div>
+<p>다음 사례에서 갑은 을의 행위를 불법 행위와 범죄 중 어떤 것이라고 생각할까요?</p>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">(사례)</h5>
+        아파트에 살고 있는 소설가 갑은 늦은 밤마다 위층에서 아이들이 뛰어다니는 소리 때문에 창작 활동에 방해를 받고 있다.
+        갑은 여러 번 위층에 살고 있는 아이들의 아버지 을에게 항의를 하였지만,
+        을은 아이들이 자기 집에서 그 정도로 뛰어다니는 것은 당연한 현상이라며 오히려 갑에게 ‘당신이 너무 예민한 것 아니냐?’라고 화를 내었다.
+    </div>
+</div>
+<div style="padding: 20px"></div>
+<form method="post" action="{{ url_for('assessment_submit') }}">
+    <div class="form-check">
+        <div>
+            <label class="form-check-label">
+            <input class="form-check-input" name="test-question" type="radio" id="choice1" value="1">불법행위
+            </label>
+        </div>
+        <div>
+            <label class="form-check-label">
+            <input class="form-check-input" name="test-question" type="radio" id="choice2" value="2">범죄
+            </label>
+        </div>
+    </div>
+    <div style="padding: 20px"></div>
+    <button class="btn btn-default" type="submit">제출</button>
+</form>
+<!-- The result of quiz -->
+{% if answer %}
+<div style="height:20px;"></div>
+    {% if answer == 1 %}
+    <div class="alert alert-primary">
+        <strong>정답입니다!</strong>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        <strong>땡! 오답입니다!</strong> 정답은 '불법행위'입니다.
+    </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

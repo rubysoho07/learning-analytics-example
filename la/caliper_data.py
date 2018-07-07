@@ -63,3 +63,7 @@ def save_annotation_event(user, tags):
     )
 
     sensor.send(event)
+
+
+def save_assessment_event(user, assessment):
+    pass

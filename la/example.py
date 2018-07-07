@@ -79,6 +79,27 @@ def tag_page():
     return render_template('reading.html', tags=tags)
 
 
+@app.route('/assessment')
+def assessment_page():
+    """ Starting assessment. """
+
+    return render_template('assessment.html')
+
+
+@app.route('/assessment_submit', methods=['POST'])
+def assessment_submit():
+    """ Submit student's answer for the assessment. """
+
+    answer = int(request.form['test-question'])
+
+    if answer == 1:
+        score_given = 10.0
+    else:
+        score_given = 0.0
+
+    return render_template('assessment.html', answer=answer)
+
+
 @app.route('/endpoint', methods=['POST'])
 def endpoint():
     """ Endpoint to save learning record. """
