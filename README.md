@@ -27,6 +27,10 @@ PyCon Korea 2018 컨퍼런스 중 '파이썬으로 학생 들여다보기' 세�
 ```bash
 $ pip install -r requirements.txt
 ```
+3. 테스트용 데이터를 MongoDB에 import 합니다. (Localhost에 설치함을 가정)
+```bash
+$ mongoimport --host='localhost:27017' -d 'LRS' -c 'CaliperEvents' --file='caliper_gradeevent_sample.json'
+```
 
 ## 참고자료
 
