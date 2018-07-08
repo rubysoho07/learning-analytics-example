@@ -3,3 +3,7 @@
 
 # Visual Studio Code
 .vscode/
+
+# Files generated automatically
+*.pyc 
+__pycache__/
