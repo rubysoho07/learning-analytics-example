@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px"></div>
+<h3>오늘({{ today.strftime('%Y-%m-%d') }})의 학습활동</h3>
+
+<div style="padding: 10px"></div>
+<div>
+    <ul class="list-group">
+{% for event in result %}
+    <li class="list-group-item">
+        <strong>{{ event.actor }}</strong>님은 <strong>{{ event.eventTime.strftime('%H시 %M분 %S초') }}</strong>에
+        <strong>{{ event.object }}</strong>를 <strong>{{ event.action }}</strong> 하였습니다.
+    </li>
+{% endfor %}
+    </ul>
+</div>
+
+<div style="padding: 20px"></div>
+
+<h3>같은 그룹 내 성적 비교</h3>
+
+<div>
+
+</div>
+
+{% endblock %}

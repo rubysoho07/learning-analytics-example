@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from pymongo import MongoClient
 from bson import ObjectId
@@ -124,3 +125,50 @@ def endpoint():
         return "Inserting events completed!"
     else:
         abort(400)
+
+
+def _get_records_by_date(date):
+    """ Get learning records from LRS (Querying by specific date) """
+    result = lrs.find({
+        "actor.name": session['username'],
+        "_id": {
+            "$gt": ObjectId.from_datetime(date),
+            "$lt": ObjectId.from_datetime(date + datetime.timedelta(days=1))
+        }
+    }, {
+        "actor.name": 1,
+        "action": 1,
+        "eventTime": 1,
+        "object.name": 1
+    })
+
+    return result
+
+
+@app.route('/dashboard')
+def dashboard():
+
+    if _check_login() is False:
+        return redirect(url_for('index'))
+
+    # 1일 단위 학습활동 기록
+    today = datetime.datetime.today().replace(hour=0, minute=0, second=0, microsecond=0,
+                                              tzinfo=datetime.timezone(datetime.timedelta(hours=9)))
+
+    today_events = list()
+
+    for event in _get_records_by_date(today):
+        event_time = datetime.datetime.strptime(event['eventTime'], '%Y-%m-%dT%H:%M:%S.%fZ')\
+            .replace(tzinfo=datetime.timezone.utc).astimezone(datetime.timezone(datetime.timedelta(hours=9)))
+
+        obj = {
+            'actor': event['actor']['name'],
+            'action': event['action'],
+            'eventTime': event_time,
+            'object': event['object']['name']
+        }
+        today_events.append(obj)
+
+    # TODO: 동일 그룹 내 성적 비교하기
+
+    return render_template('dashboard.html', result=today_events, today=today)
