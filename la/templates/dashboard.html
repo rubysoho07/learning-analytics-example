@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 
+{% block script_head %}
+    <!-- Load D3.js -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Load billboard.js with style -->
+    <script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.js"></script>
+    <link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.css">
+    <style>
+        .bb-chart-text {
+            font-size: 15pt;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div style="padding: 20px"></div>
 <h3>오늘({{ today.strftime('%Y-%m-%d') }})의 학습활동</h3>
@@ -7,7 +21,7 @@
 <div style="padding: 10px"></div>
 <div>
     <ul class="list-group">
-{% for event in result %}
+{% for event in today_events %}
     <li class="list-group-item">
         <strong>{{ event.actor }}</strong>님은 <strong>{{ event.eventTime.strftime('%H시 %M분 %S초') }}</strong>에
         <strong>{{ event.object }}</strong>를 <strong>{{ event.action }}</strong> 하였습니다.
@@ -20,8 +34,36 @@
 
 <h3>같은 그룹 내 성적 비교</h3>
 
-<div>
-
+<div id="same-group-chart">
 </div>
 
+{% endblock %}
+
+{% block script_body %}
+<script>
+    var chart = bb.generate({
+        data: {
+            json: {
+                my_score: [ {{ grade_comparison.my_score }} ],
+                average_score: [ {{ grade_comparison.average_score }}]
+            },
+            type: "bar",
+            names: {
+                my_score: "내 점수",
+                average_score: "반 평균 점수",
+            },
+            labels: true
+        },
+        bindto: "#same-group-chart",
+            axis: {
+                rotated: true,
+                x: {
+                    show: false
+                }
+            },
+        tooltip: {
+            show: false
+        }
+    });
+</script>
 {% endblock %}

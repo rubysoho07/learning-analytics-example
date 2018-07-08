@@ -145,16 +145,8 @@ def _get_records_by_date(date):
     return result
 
 
-@app.route('/dashboard')
-def dashboard():
-
-    if _check_login() is False:
-        return redirect(url_for('index'))
-
-    # 1일 단위 학습활동 기록
-    today = datetime.datetime.today().replace(hour=0, minute=0, second=0, microsecond=0,
-                                              tzinfo=datetime.timezone(datetime.timedelta(hours=9)))
-
+def _get_today_event_summary(today):
+    """ Retrieve summarized today's events. """
     today_events = list()
 
     for event in _get_records_by_date(today):
@@ -169,6 +161,55 @@ def dashboard():
         }
         today_events.append(obj)
 
-    # TODO: 동일 그룹 내 성적 비교하기
+    return today_events
 
-    return render_template('dashboard.html', result=today_events, today=today)
+
+def _get_grade_comparison():
+    """ Get my grade and average grade of the group I belong. """
+
+    my_grade = lrs.find({
+        "type": "GradeEvent",
+        "actor.name": session['username'],
+        "object.assignable.id": "http://example.org/assessment/1"
+    }, {
+        "generated.scoreGiven": 1
+    })[0]
+
+    average_grade = list(lrs.aggregate([
+        {
+            "$match": {
+                "type": "GradeEvent",
+                "object.assignable.id": "http://example.org/assessment/1"
+            }
+        },
+        {
+            "$group": {
+                "_id": None,
+                "average_score": {
+                    "$avg": "$generated.scoreGiven"
+                }
+            }
+        }
+    ]))[0]
+
+    return {
+        "my_score": my_grade['generated']['scoreGiven'],
+        "average_score": average_grade['average_score']
+    }
+
+
+@app.route('/dashboard')
+def dashboard():
+
+    if _check_login() is False:
+        return redirect(url_for('index'))
+
+    # 1일 단위 학습활동 기록
+    today = datetime.datetime.today().replace(hour=0, minute=0, second=0, microsecond=0,
+                                              tzinfo=datetime.timezone(datetime.timedelta(hours=9)))
+    today_events = _get_today_event_summary(today)
+
+    # 동일 그룹 내 성적 비교하기
+    grade_comparison = _get_grade_comparison()
+
+    return render_template('dashboard.html', today_events=today_events, today=today, grade_comparison=grade_comparison)
