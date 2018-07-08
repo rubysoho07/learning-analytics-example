@@ -5,11 +5,7 @@
 
     <div style="padding: 20px"></div>
 
-    <h2>2. 권익 침해, 불법 행위와 범죄</h2>
-
-    <p>민사관계: 개인 간에 분쟁이 발생하고, 이로 인한 정신적, 금전적 손해를 배상해야 하는 경우</p>
-
-    <p>불법 행위 vs. 범죄</p>
+    <h3>불법 행위 vs. 범죄</h3>
     <ul>
         <li>불법 행위: 고의나 과실로 남의 재산을 파손하여 금전적, 정신적인 피해를 주는 행위</li>
         <li>범죄: 다른 사람의 권익을 침해할 뿐만 아니라 사회의 질서나 안전에 반하는 행위</li>
@@ -18,7 +14,7 @@
     <!-- Form for tagging -->
     <form class="form-inline" method="post" action="{{ url_for('tag_page') }}">
         <div class="form-group col-6" style="padding-left:0px;">
-            <input type="text" class="form-control" id="tag-input" name="tags" placeholder="이 글에서 제시된 주요 개념을 적어 주세요(쉼표로 구분)" style="width:100%;">
+            <input type="text" class="form-control" id="tag-input" name="tags" placeholder="이 글에 달고 싶은 태그를 적어 주세요.(쉼표로 구분)" style="width:100%;">
         </div>
         &nbsp;
         <button class="btn btn-default" type="submit">Add tag</button>
