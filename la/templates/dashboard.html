@@ -23,7 +23,7 @@
     <ul class="list-group">
 {% for event in today_events %}
     <li class="list-group-item">
-        <strong>{{ event.actor }}</strong>님은 <strong>{{ event.eventTime.strftime('%H시 %M분 %S초') }}</strong>에
+        <strong>{{ event.actor }}</strong>님은 <strong>{{ event.eventTime.strftime('%H:%M:%S') }}</strong>에
         <strong>{{ event.object }}</strong>를 <strong>{{ event.action }}</strong> 하였습니다.
     </li>
 {% endfor %}
