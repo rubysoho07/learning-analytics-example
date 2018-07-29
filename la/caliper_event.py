@@ -40,7 +40,7 @@ def save_session_event(is_login, user):
 
 def save_navigation_event(user):
 
-    # Create and send AnnotationEvent
+    # Create and send NavigationEvent
     event = events.NavigationEvent(
         actor=get_user(user),
         action=CALIPER_ACTIONS['NAVIGATED_TO'],
