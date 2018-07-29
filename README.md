@@ -4,22 +4,19 @@ PyCon Korea 2018 컨퍼런스 중 '파이썬으로 학생 들여다보기' 세�
 
 (참고: https://www.pycon.kr/2018/program/32)
 
-## TODO List
+## 학습 데이터 저장 방법 샘플 코드
 
-* [x] xAPI 기반의 학습 데이터 생성 샘플 코드 (Gist로 제공)
-* [x] Caliper 기반의 학습 데이터 생성 샘플 코드 (Gist로 제공)
-* [x] Flask + PyMongo + Caliper-Python 설치
-* [x] 로그인/로그아웃 기능 + Caliper 기반의 데이터 생성
-* [x] 글 읽기 기능 + Caliper 기반의 데이터 생성
-* [x] 태그 기능 + Caliper 기반의 데이터 생성
-* [x] 평가 시작 기능 + Caliper 기반의 데이터 생성
-* [x] 평가 종료 및 결과 표시 기능 + Caliper 기반의 데이터 생성
-* [x] Caliper 데이터를 바탕으로 한 1일 단위의 학습활동 대시보드
-* [x] Caliper 데이터를 바탕으로 한 유사 그룹과의 성적 비교 대시보드
-* [ ] 발표한 내용을 청중이 스스로 재현할 수 있도록 README.md 파일 보강
-* [ ] 테스트
+### xAPI
 
-## 필요한 패키지 설치
+1. Actor, Verb, Object: https://gist.github.com/rubysoho07/062df1cf32a72a0bbc3ebd77c5111312
+2. Statement: https://gist.github.com/rubysoho07/33729dec4dcfbb0ef37d05dbe31f9df4
+
+### Caliper
+
+1. Actor, Action, Object: https://gist.github.com/rubysoho07/393057852a1457fb7d826ae3d21cf2c5
+2. Statement: https://gist.github.com/rubysoho07/810d7b0e4c2b94fb1a8fb1af625a6c6c
+
+## 학습 데이터 저장 및 분석 예제 실행하기
 
 1. 데이터 저장을 위해 MongoDB를 설치해 주세요. 사용하는 플랫폼에 맞추어 설치하면 됩니다.
 (참고자료: https://docs.mongodb.com/manual/administration/install-community/)
@@ -27,10 +24,22 @@ PyCon Korea 2018 컨퍼런스 중 '파이썬으로 학생 들여다보기' 세�
 ```bash
 $ pip install -r requirements.txt
 ```
-3. 테스트용 데이터를 MongoDB에 import 합니다. (Localhost에 설치함을 가정)
+3. MongoDB 서버를 실행합니다. 
+4. 테스트용 데이터를 MongoDB에 import 합니다. (Localhost에 설치함을 가정)
 ```bash
 $ mongoimport --host='localhost:27017' -d 'LRS' -c 'CaliperEvents' --file='caliper_gradeevent_sample.json'
 ```
+5. Flask 어플리케이션을 실행합니다.
+```bash
+$ python main.py
+In folder /home/yungon/workspace/learning-analytics-example
+/home/yungon/.pyenv/versions/la-example/bin/python -m flask run
+ * Serving Flask app "main.py"
+ * Environment: development
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+``` 
+6. 웹 브라우저에서 `http://localhost:5000`으로 접속합니다.
 
 ## 사용한 것들
 
