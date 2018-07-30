@@ -34,6 +34,7 @@ $ git clone https://github.com/rubysoho07/learning-analytics-example.git
 (참고자료: https://docs.mongodb.com/manual/administration/install-community/)
 2. pip으로 필요한 패키지를 설치합니다. (기왕이면 `virtualenv`를 이용하여 별도의 환경을 구성하는 것이 좋습니다.)
 ```bash
+$ cd learning-analytics-example
 $ pip install -r requirements.txt
 ```
 3. MongoDB 서버를 실행합니다. 
