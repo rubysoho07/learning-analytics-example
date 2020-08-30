@@ -1,5 +1,5 @@
 import json
-import datetime
+from datetime import datetime, timezone, timedelta
 
 from pymongo import MongoClient
 from bson import ObjectId
@@ -133,7 +133,7 @@ def _get_records_by_date(date):
         "actor.name": session['username'],
         "_id": {
             "$gt": ObjectId.from_datetime(date),
-            "$lt": ObjectId.from_datetime(date + datetime.timedelta(days=1))
+            "$lt": ObjectId.from_datetime(date + timedelta(days=1))
         }
     }, {
         "actor.name": 1,
@@ -150,8 +150,8 @@ def _get_today_event_summary(today):
     today_events = list()
 
     for event in _get_records_by_date(today):
-        event_time = datetime.datetime.strptime(event['eventTime'], '%Y-%m-%dT%H:%M:%S.%fZ')\
-            .replace(tzinfo=datetime.timezone.utc).astimezone(datetime.timezone(datetime.timedelta(hours=9)))
+        event_time = datetime.strptime(event['eventTime'], '%Y-%m-%dT%H:%M:%S.%fZ')\
+            .replace(tzinfo=timezone.utc).astimezone(timezone(timedelta(hours=9)))
 
         obj = {
             'actor': event['actor']['name'],
@@ -205,8 +205,8 @@ def dashboard():
         return redirect(url_for('index'))
 
     # 1일 단위 학습활동 기록
-    today = datetime.datetime.today().replace(hour=0, minute=0, second=0, microsecond=0,
-                                              tzinfo=datetime.timezone(datetime.timedelta(hours=9)))
+    today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0,
+                                     tzinfo=timezone(timedelta(hours=9)))
     today_events = _get_today_event_summary(today)
 
     # 동일 그룹 내 성적 비교하기
