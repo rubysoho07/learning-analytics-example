@@ -62,5 +62,4 @@ def get_score(score):
 
 
 def get_assessment():
-    return entities.Assessment(id='http://example.org/assessment/1', name='불법 행위와 범죄'
-                                                                          '(평가)')
+    return entities.Assessment(id='http://example.org/assessment/1', name='불법 행위와 범죄(평가)')

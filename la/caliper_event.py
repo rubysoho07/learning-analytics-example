@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 import caliper
 from caliper import entities, events
@@ -32,7 +32,7 @@ def save_session_event(is_login, user):
         actor=get_user(user),
         action=CALIPER_ACTIONS['LOGGED_IN'] if is_login is True else CALIPER_ACTIONS['LOGGED_OUT'],
         object=get_software_application(),
-        eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
+        eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
     sensor.send(event)
@@ -45,7 +45,7 @@ def save_navigation_event(user):
         actor=get_user(user),
         action=CALIPER_ACTIONS['NAVIGATED_TO'],
         object=get_web_page(),
-        eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
+        eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
 
@@ -68,7 +68,7 @@ def save_annotation_event(user, tags):
         action=CALIPER_ACTIONS['TAGGED'],
         object=get_web_page(),
         generated=generated_tag,
-        eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
+        eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
 
@@ -80,7 +80,7 @@ def save_assessment_event_started(user):
         actor=get_user(user),
         action=CALIPER_ACTIONS['STARTED'],
         object=get_assessment(),
-        eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
+        eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
 
@@ -92,7 +92,7 @@ def save_assessment_event_submitted_grade_event(user, score):
         actor=get_user(user),
         action=CALIPER_ACTIONS['SUBMITTED'],
         object=get_assessment(),
-        eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
+        eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
 
@@ -101,7 +101,7 @@ def save_assessment_event_submitted_grade_event(user, score):
         action=CALIPER_ACTIONS['GRADED'],
         object=get_attempt(user),
         generated=get_score(score),
-        eventTime=datetime.datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
+        eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
     
