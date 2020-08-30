@@ -1,7 +1,7 @@
 # Learning Analytics Example
 
 PyCon Korea 2018 컨퍼런스 중 '파이썬으로 학생 들여다보기' 세션의 샘플 코드입니다. <br>
-(Sample code for 'Looking into Students with Python' of PyCon Korea 2018.) 
+(Sample code for 'Looking into Student Experience with Python' of PyCon Korea 2018.) 
 
 (Reference: https://www.pycon.kr/2018/program/32 - In Korean)
 
