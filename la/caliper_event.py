@@ -1,8 +1,12 @@
+import os
+import json
+
 from datetime import datetime
 
-import caliper
 from caliper import entities, events
 from caliper.constants import CALIPER_ACTIONS
+
+import requests
 
 from la.caliper_entity import *
 
@@ -14,17 +18,15 @@ __all__ = [
     'save_assessment_event_submitted_grade_event'
 ]
 
-# Caliper configuration
-sensor_config = caliper.HttpOptions(
-    host='http://localhost:5000/endpoint',
-    auth_scheme='Bearer',
-    api_key='Test'
-)
+SENSOR_HOST = os.environ['SENSOR_HOST']
 
-sensor = caliper.build_sensor_from_config(
-    sensor_id='https://example.org/sensor',
-    config_options=sensor_config
-)
+
+def _send_event(event: dict):
+    event_str = json.dumps(event, ensure_ascii=False)
+
+    requests.post(SENSOR_HOST,
+                  data=event_str.encode(),
+                  headers={"Content-Type": "application/json"})
 
 
 def save_session_event(is_login, user):
@@ -35,7 +37,8 @@ def save_session_event(is_login, user):
         eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
-    sensor.send(event)
+
+    _send_event(event.as_dict(thin_props=True, thin_context=True))
 
 
 def save_navigation_event(user):
@@ -49,7 +52,7 @@ def save_navigation_event(user):
         group=get_group()
     )
 
-    sensor.send(event)
+    _send_event(event.as_dict(thin_props=True, thin_context=True))
 
 
 def save_annotation_event(user, tags):
@@ -72,7 +75,7 @@ def save_annotation_event(user, tags):
         group=get_group()
     )
 
-    sensor.send(event)
+    _send_event(event.as_dict(thin_props=True, thin_context=True))
 
 
 def save_assessment_event_started(user):
@@ -84,7 +87,7 @@ def save_assessment_event_started(user):
         group=get_group()
     )
 
-    sensor.send(assessment_event)
+    _send_event(assessment_event.as_dict(thin_props=True, thin_context=True))
 
 
 def save_assessment_event_submitted_grade_event(user, score):
@@ -104,5 +107,6 @@ def save_assessment_event_submitted_grade_event(user, score):
         eventTime=datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
         group=get_group()
     )
-    
-    sensor.send([assessment_event, grade_event])
+
+    _send_event(assessment_event.as_dict(thin_props=True, thin_context=True))
+    _send_event(grade_event.as_dict(thin_props=True, thin_context=True))
